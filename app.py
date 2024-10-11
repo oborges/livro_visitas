@@ -5,10 +5,10 @@ import os
 app = Flask(__name__)
 
 # Configurações do banco de dados
-DB_HOST = os.environ.get('DB_HOST', '10.217.5.144')
-DB_NAME = os.environ.get('DB_NAME', 'livrovisitas')
-DB_USER = os.environ.get('DB_USER', 'seu_usuario')  # Substitua por seu usuário do PostgreSQL
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'OlavoBorges')
+DB_HOST = os.environ.get('DB_HOST', '10.217.0.187')
+DB_NAME = os.environ.get('DB_NAME', 'livro_visitas')
+DB_USER = os.environ.get('DB_USER', 'olavo')  # Substitua por seu usuário do PostgreSQL
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'OlavoBorges') #substitua por sua senha
 DB_PORT = os.environ.get('DB_PORT', '5432')
 
 def get_db_connection():
