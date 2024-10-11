@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Livro de Visitas</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 50%; margin: auto; }
+        form { margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; }
+        .visita { border-bottom: 1px solid #ccc; padding: 10px 0; }
+        .data { font-size: 0.8em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Livro de Visitas</h1>
+        <form method="POST">
+            <input type="text" name="nome" placeholder="Seu nome" required>
+            <textarea name="mensagem" placeholder="Sua mensagem" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+        <h2>Visitas</h2>
+        {% for visita in visitas %}
+            <div class="visita">
+                <strong>{{ visita[0] }}</strong> <span class="data">em {{ visita[2].strftime('%d/%m/%Y %H:%M') }}</span><br>
+                <p>{{ visita[1] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

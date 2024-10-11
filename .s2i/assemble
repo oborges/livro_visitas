@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+# Instalar as dependências
+pip install --no-cache-dir -r requirements.txt
+
+# Copiar o código-fonte para o diretório de destino
+cp -R . $APP_ROOT/
+
+# Executar scripts de montagem padrão do S2I Python
+/usr/libexec/s2i/assemble
+
