@@ -5,10 +5,10 @@ import os
 app = Flask(__name__)
 
 # Configurações do banco de dados
-DB_HOST = os.environ.get('DB_HOST', '10.217.0.187')
-DB_NAME = os.environ.get('DB_NAME', 'livro_visitas')
-DB_USER = os.environ.get('DB_USER', 'olavo')  # Substitua por seu usuário do PostgreSQL
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'OlavoBorges') #substitua por sua senha
+DB_HOST = os.environ.get('DB_HOST')
+DB_NAME = os.environ.get('DB_NAME')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_PORT = os.environ.get('DB_PORT', '5432')
 
 def get_db_connection():
@@ -57,6 +57,33 @@ def index():
     cur.close()
     conn.close()
     return render_template('index.html', visitas=visitas)
+
+@app.route('/health', methods=['GET'])
+def health():
+    """
+    Endpoint de healthcheck que verifica se a aplicação e o banco de dados estão funcionando.
+    """
+    health_status = {
+        "status": "ok",
+        "database": "unknown"
+    }
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT 1;')
+        cur.close()
+        conn.close()
+        health_status["database"] = "ok"
+    except Exception as e:
+        health_status["status"] = "error"
+        health_status["database"] = "error"
+        health_status["message"] = str(e)
+    
+    if health_status["status"] == "ok" and health_status["database"] == "ok":
+        return jsonify(health_status), 200
+    else:
+        return jsonify(health_status), 500
+
 
 if __name__ == '__main__':
     init_db()
